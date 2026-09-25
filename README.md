@@ -1,2 +1,2 @@
-# unity-template
-Basic template for a Unity project git repo
+# A fast-paced movement shooter made in Unity
+For CSU's CS462 Fall 2026 Term Project
