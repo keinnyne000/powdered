@@ -11,8 +11,11 @@ namespace Game.Platform
         public Session(App app)
         {
             State = new GameState();
+            var commands = new CommandQueue();
             
-            app.Register(new CommandSystem(State));
+            app.Register(new CommandSystem(State, commands));
+            //TODO: publish commands to a view context,
+            //      which can be bound by IGameViews (ui components)
         }
     }
 }

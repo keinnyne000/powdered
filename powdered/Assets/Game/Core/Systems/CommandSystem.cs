@@ -3,15 +3,23 @@
     public class CommandSystem : ISimulationSystem
     {
         readonly GameState _state;
-
-        public CommandSystem(GameState state)
+        readonly CommandQueue _commands;
+        public CommandSystem(GameState state, CommandQueue commands)
         {
             _state = state;
+            _commands = commands;
         }
         
         public void Tick(float deltaTime)
         {
-            throw new System.NotImplementedException();
+            while(_commands.TryDequeue(out var command))
+                Apply(command);
         }
+
+        public void Apply(ICommand command)
+        {
+            // TODO: Handle commands, probably using some kind of Command Router
+        }    
     }
+    
 }
