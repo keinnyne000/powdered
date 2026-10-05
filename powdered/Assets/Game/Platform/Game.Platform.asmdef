@@ -1,0 +1,17 @@
+{
+    "name": "Game.Platform",
+    "rootNamespace": "Platform",
+    "references": [
+        "GUID:1fec23a4cd5d18341b87d7febd47ffa1",
+        "GUID:ba9c5b4f8c83fb64c921e9be2c0aae86"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
