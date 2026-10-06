@@ -7,7 +7,7 @@ namespace Game.Core
     /// </summary>
     public sealed class CommandQueue
     {
-        readonly Queue<ICommand> _pending;
+        readonly Queue<ICommand> _pending = new();
         public void Enqueue(ICommand command) => _pending.Enqueue(command);
         public bool TryDequeue(out ICommand command) => _pending.TryDequeue(out command);
     }
