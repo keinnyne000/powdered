@@ -12,6 +12,10 @@ namespace Game.Platform
         
         private Session _session;
         
+        /// <summary>
+        /// Registers an ISimulationSystem to be called each frame in order in which it was registered
+        /// </summary>
+        /// <param name="system"></param>
         public void Register(ISimulationSystem system) => _simulation.Add(system);
 
         private void Awake()
