@@ -5,14 +5,10 @@ namespace Game.Core
     /// Laser-thin wrapper around a queue object
     /// Publish commands here for the command system to process them
     /// </summary>
-    public sealed class CommandQueue
+    public sealed class CommandQueue : ICommandSink
     {
         readonly Queue<ICommand> _pending = new();
         
-        /// <summary>
-        /// Queues an ICommand to be processed next frame
-        /// </summary>
-        /// <param name="command"></param>
         public void Enqueue(ICommand command) => _pending.Enqueue(command);
         public bool TryDequeue(out ICommand command) => _pending.TryDequeue(out command);
     }
