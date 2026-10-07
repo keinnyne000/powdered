@@ -7,6 +7,5 @@
         /// </summary>
         /// <param name="command"></param>
         public void Enqueue(ICommand command);
-
     }
 }
