@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Core;
+using Game.Presentation;
 using UnityEngine;
 
 namespace Game.Platform
@@ -7,6 +8,8 @@ namespace Game.Platform
     [DisallowMultipleComponent]
     public sealed class App : MonoBehaviour
     {
+        private readonly List<ViewRegistry> _registries = new();
+        
         private readonly List<ISimulationSystem> _simulation = new List<ISimulationSystem>();
         private readonly List<IPresentationSystem> _presentation = new List<IPresentationSystem>();
         
@@ -31,6 +34,9 @@ namespace Game.Platform
         private void Start()
         {
             _session = new Session(this, _gameConfigAsset);
+
+            foreach (var reg in _registries)
+                _session.Attach(reg);
         }
 
         void Update()
