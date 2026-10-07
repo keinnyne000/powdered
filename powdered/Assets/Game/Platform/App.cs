@@ -25,6 +25,7 @@ namespace Game.Platform
             
             // Load the first game config in an Assets/.../Resources/ folder that is named "GameConfig"
             _gameConfigAsset = Resources.Load<GameConfig>("GameConfig");
+            Debug.Assert(_gameConfigAsset != null);
         }
 
         private void Start()
