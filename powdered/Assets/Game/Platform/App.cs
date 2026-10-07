@@ -11,6 +11,7 @@ namespace Game.Platform
         private readonly List<IPresentationSystem> _presentation = new List<IPresentationSystem>();
         
         private Session _session;
+        private GameConfig _gameConfigAsset;
         
         /// <summary>
         /// Registers an ISimulationSystem to be called each frame in order in which it was registered
@@ -21,12 +22,14 @@ namespace Game.Platform
         private void Awake()
         {
             DontDestroyOnLoad(this.gameObject);
-            // Resources.Load(Config);
+            
+            // Load the first game config in an Assets/.../Resources/ folder that is named "GameConfig"
+            _gameConfigAsset = Resources.Load<GameConfig>("GameConfig");
         }
 
         private void Start()
         {
-            _session = new Session(this);
+            _session = new Session(this, _gameConfigAsset);
         }
 
         void Update()
