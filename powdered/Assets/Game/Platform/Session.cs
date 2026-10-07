@@ -1,5 +1,6 @@
 ﻿using Game.Core;
 using Game.Core.Systems;
+using Game.Presentation;
 using Presentation.Game.Presentation;
 
 namespace Game.Platform
@@ -33,6 +34,12 @@ namespace Game.Platform
         public void RequestRestart()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void Attach(ViewRegistry registry)
+        {
+            foreach (var view in registry.views)
+                view.Bind(ViewContext);
         }
     }
 }
