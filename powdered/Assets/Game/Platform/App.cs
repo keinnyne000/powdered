@@ -8,7 +8,7 @@ namespace Game.Platform
     [DisallowMultipleComponent]
     public sealed class App : MonoBehaviour
     {
-        private readonly List<ViewRegistry> _registries = new();
+        private readonly HashSet<ViewRegistry> _registries = new();
         
         private readonly List<ISimulationSystem> _simulation = new List<ISimulationSystem>();
         private readonly List<IPresentationSystem> _presentation = new List<IPresentationSystem>();
@@ -33,8 +33,11 @@ namespace Game.Platform
 
         private void Start()
         {
-            _session = new Session(this, _gameConfigAsset);
+            foreach (var registry in GetViewRegistriesInScene())
+                _registries.Add(registry); // Since this is a hash set, it will not have duplicate adds
 
+            _session = new Session(this, _gameConfigAsset);
+            
             foreach (var reg in _registries)
                 _session.Attach(reg);
         }
@@ -45,6 +48,10 @@ namespace Game.Platform
             foreach (var system in _simulation)
                 system.Tick(dt);
         }
+
+        //! Warning, the current implementation of this method (GetViewRegistriesInScene)
+        //  is VERY EXPENSIVE Do not invoke frequently or regularly.
+        ViewRegistry[] GetViewRegistriesInScene() => (ViewRegistry[])FindObjectsByType(typeof(ViewRegistry), FindObjectsSortMode.None);
 
         private void LateUpdate()
         {
