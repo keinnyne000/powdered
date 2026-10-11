@@ -27,6 +27,8 @@ namespace Game.Platform
             
             GameConfig = config;
             
+            var input = new InputService();
+            app.Register(new PlayerInputSystem(input, commands));
             app.Register(new CommandSystem(State, commands));
             // Future systems, like the player spawn system can pass config to get a reference
         }
