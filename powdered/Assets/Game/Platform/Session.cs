@@ -31,6 +31,7 @@ namespace Game.Platform
             app.Register(new PlayerInputSystem(input, commands));
             app.Register(new CommandSystem(State, commands));
             // Future systems, like the player spawn system can pass config to get a reference
+            app.Register(new PlayerSystem(State));
         }
 
         public void RequestRestart()

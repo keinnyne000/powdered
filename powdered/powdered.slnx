@@ -1,0 +1,7 @@
+﻿<Solution>
+  <Project Path="Game.Platform.csproj" />
+  <Project Path="Game.Core.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Game.Presentation.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+</Solution>
