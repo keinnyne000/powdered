@@ -13,6 +13,13 @@ namespace Game.Core
         public float sensY;
         public float xRotation;
         public float yRotation;
+
+        //Movement
+        public float playerSpeed;
+        public float playerJumpForce;
+        public float playerGravity;
+        public Vector3 moveDirection;
+        public bool jumped;
     }
 }
 
