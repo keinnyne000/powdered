@@ -32,6 +32,7 @@ namespace Game.Platform
             app.Register(new CommandSystem(State, commands));
             // Future systems, like the player spawn system can pass config to get a reference
             app.Register(new PlayerSystem(State));
+            app.Register(new GunSystem(State, input, config.StartingGun));
         }
 
         public void RequestRestart()
