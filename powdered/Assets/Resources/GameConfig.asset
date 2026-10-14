@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::Game.Core.GameConfig
   playerPrefab: {fileID: 0}
   startingGun: {fileID: 11400000, guid: 2f1283c46a20496bbbcfd10955acb4f4, type: 2}
+  levelData:
+    prefab: {fileID: 5967795094544696173, guid: 1feabd4dc55a1de4eaa67cca71e41adf, type: 3}
