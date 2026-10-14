@@ -49,12 +49,12 @@ namespace Game.Core
         /// <summary>
         /// A list of enemies that were spawned in THIS TICK, cleared after each tick by EnemySpawnSystem
         /// </summary>
-        public readonly List<EnemyObject> NewEnemies = new();
+        public readonly HashSet<EnemyObject> NewEnemies = new();
         
         /// <summary>
         /// A list of enemies that died THIS TICK, cleared after each tick by EnemyReapSystem
         /// </summary>
-        public readonly List<EnemyObject> DeadEnemies = new();
+        public readonly HashSet<EnemyObject> DeadEnemies = new();
         #endregion
     }
 }

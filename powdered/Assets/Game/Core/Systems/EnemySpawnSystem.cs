@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Game.Core.Enemies;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 namespace Game.Core.Systems
 {
@@ -64,6 +66,10 @@ namespace Game.Core.Systems
             // TODO: Update this to however we want to handle spawning points (Enemy Strategist)
             var spawnPoint = _state.EnemySpawners.Keys.First().SpawnPoint.transform.position;
             enemy.transform.position = spawnPoint;
+            
+            // Give it the dead enemies list so it can notify when it dies
+            enemy.DeadEnemies = _state.DeadEnemies;
+            
             // Add this enemy to the new enemies list so other systems can do stuff to the new enemy
             // IE, spawn/bind visuals
             _state.NewEnemies.Add(enemy);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Core.Enemies
@@ -18,7 +19,9 @@ namespace Game.Core.Enemies
     {
         [HideInInspector] public float currentHealth = -1;
         [HideInInspector] public EnemyType type;
-
+        [HideInInspector] public HashSet<EnemyObject> DeadEnemies = null;
+        public event Action<EnemyObject> OnTakeDamage;
+        
         public void BindVisuals(GameObject visualsObject)
         {
             visualsObject.transform.SetParent(transform);
@@ -27,9 +30,11 @@ namespace Game.Core.Enemies
 
         public void TakeDamage(float amount)
         {
+            OnTakeDamage?.Invoke(this);
             currentHealth -= amount;
             if (currentHealth <= 0)
             {
+                DeadEnemies.Add(this);
             }
         }
     }
