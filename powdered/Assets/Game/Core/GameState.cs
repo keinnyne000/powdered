@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Game.Core.Enemies;
 using UnityEngine;
 
 namespace Game.Core
@@ -30,6 +32,10 @@ namespace Game.Core
         
         // Levels
         public GameObject levelParent;
+        
+        // Enemies
+        public Dictionary<EnemySpawner, EnemySpawnerData> EnemySpawners = new();
+        public float TimeSinceLastSpawn;
     }
 }
 
