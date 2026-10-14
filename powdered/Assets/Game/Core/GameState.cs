@@ -32,19 +32,30 @@ namespace Game.Core
         
         // Levels
         public GameObject levelParent;
-        
-        // Enemies
+
+        #region Enemies
         /// <summary>
         /// Key: enemy spawner object. Value: associated spawner data.
         /// Used by EnemySpawnSystem to spawn enemies + know when a spawner data goes out of scope
         /// </summary>
-        public Dictionary<EnemySpawner, EnemySpawnerData> EnemySpawners = new();
-        public float TimeOfLastSpawn;
+        public readonly Dictionary<EnemySpawner, EnemySpawnerData> EnemySpawners = new();
+        public float TimeOfLastSpawn = float.NegativeInfinity;
 
         /// <summary>
-        /// A list of enemies in the scene
+        /// A list of every enemy in the scene, sorted by enemy type
         /// </summary>
-        public HashSet<EnemyObject> Enemies = new();
+        public readonly Dictionary<EnemyType, HashSet<EnemyObject>> Enemies = new();
+        
+        /// <summary>
+        /// A list of enemies that were spawned in THIS TICK, cleared after each tick by EnemySpawnSystem
+        /// </summary>
+        public readonly List<EnemyObject> NewEnemies = new();
+        
+        /// <summary>
+        /// A list of enemies that died THIS TICK, cleared after each tick by EnemyReapSystem
+        /// </summary>
+        public readonly List<EnemyObject> DeadEnemies = new();
+        #endregion
     }
 }
 

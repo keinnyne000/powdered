@@ -3,23 +3,33 @@ using UnityEngine;
 
 namespace Game.Core.Enemies
 {
+    public enum EnemyType
+    {
+        Drone,
+        Creeper, // (aww man) -- just here for an example, we won't actually have this
+    }
+    
+    
     /// <summary>
     /// In-scene representation of an enemy
     /// NOT responsible for its own life cycle.
     /// </summary>
-    public abstract class EnemyObject : MonoBehaviour, IDamageable
+    public sealed class EnemyObject : MonoBehaviour, IDamageable
     {
-        public event Action<EnemyObject> OnDeath;
-        public bool isDead = false;
-        public float currentHealth = -1;
+        [HideInInspector] public float currentHealth = -1;
+        [HideInInspector] public EnemyType type;
 
-        public virtual void TakeDamage(float amount)
+        public void BindVisuals(GameObject visualsObject)
+        {
+            visualsObject.transform.SetParent(transform);
+            visualsObject.transform.localPosition = Vector3.zero;
+        }
+
+        public void TakeDamage(float amount)
         {
             currentHealth -= amount;
             if (currentHealth <= 0)
             {
-                isDead = true;
-                OnDeath?.Invoke(this);
             }
         }
     }
