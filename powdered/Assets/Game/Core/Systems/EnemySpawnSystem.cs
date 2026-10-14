@@ -32,10 +32,21 @@ namespace Game.Core.Systems
             
             EnemySpawner.OnNewSpawner += OnNewSpawner;
             EnemySpawner.OnSpawnerDestroyed += OnSpawnerDestroyed;
+            // Add spawners that already exist
+            foreach(var spawner in EnemySpawner.Objects)
+            {
+                _state.EnemySpawners.Add(spawner, new EnemySpawnerData());
+            }
         }
         
         public void Tick(float deltaTime)
         {
+            // Clean Up the NewEnemies List
+            while (_state.NewEnemies.Count > 0)
+            {
+                _state.NewEnemies.Pop();
+            }
+            
             if (Time.time - _state.TimeOfLastSpawn > _config.EnemySpawnSystemConfig.timeBetweenSpawns)
             {
                 // Currently, we ALWAYS spawn a drone. This should be updated later.
