@@ -27,6 +27,9 @@ namespace Game.Core
 
         //Gun
         public float gunCooldown;
+        
+        // Levels
+        public GameObject levelParent;
     }
 }
 

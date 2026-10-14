@@ -14,9 +14,17 @@ namespace Game.Core
         // Private fields, protects settings from being accidentally changed at runtime
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GunBehavior startingGun;
+        [SerializeField] private LevelData levelData;
 
         // This pattern exposes a read only method to get each field
         public GameObject PlayerPrefab => playerPrefab;
         public GunBehavior StartingGun => startingGun;
+        public LevelData LevelData => levelData;
+    }
+
+    [System.Serializable]
+    public class LevelData
+    {
+        public GameObject prefab;
     }
 }
