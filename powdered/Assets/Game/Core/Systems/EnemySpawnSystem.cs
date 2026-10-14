@@ -1,12 +1,24 @@
 ﻿using Game.Core.Enemies;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Core.Systems
 {
+    /// <summary>
+    /// A class for configuring settings related to the EnemySpawnSystem. Lives in GameConfig.
+    /// </summary>
+    [System.Serializable]
+    public class EnemySpawnSystemConfig
+    {
+        // Time between enemy spawns. This will 100% need to be changed to something more complex
+        // later down the line.
+        [FormerlySerializedAs("enemySpawnTime")] [SerializeField] public float timeBetweenSpawns;
+    }
+    
     public class EnemySpawnSystem : ISimulationSystem
     {
-        private GameState _state;
-        private GameConfig _config;
+        private readonly GameState _state;
+        private readonly GameConfig _config;
         
         public EnemySpawnSystem(GameState state, GameConfig config)
         {
@@ -19,6 +31,10 @@ namespace Game.Core.Systems
         
         public void Tick(float deltaTime)
         {
+            if (Time.time - _state.TimeOfLastSpawn > _config.EnemySpawnSystemConfig.timeBetweenSpawns)
+            {
+                _state.TimeOfLastSpawn = Time.time;
+            }
         }
 
         void OnNewSpawner(EnemySpawner spawner)

@@ -34,8 +34,17 @@ namespace Game.Core
         public GameObject levelParent;
         
         // Enemies
+        /// <summary>
+        /// Key: enemy spawner object. Value: associated spawner data.
+        /// Used by EnemySpawnSystem to spawn enemies + know when a spawner data goes out of scope
+        /// </summary>
         public Dictionary<EnemySpawner, EnemySpawnerData> EnemySpawners = new();
-        public float TimeSinceLastSpawn;
+        public float TimeOfLastSpawn;
+
+        /// <summary>
+        /// A list of enemies in the scene
+        /// </summary>
+        public HashSet<EnemyObject> Enemies = new();
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.Core.Guns;
+using Game.Core.Systems;
 using UnityEngine;
 
 namespace Game.Core
@@ -16,10 +17,18 @@ namespace Game.Core
         [SerializeField] private GunBehavior startingGun;
         [SerializeField] private LevelData levelData;
 
+        [Header("Enemies")]
+        [SerializeField] private EnemySpawnSystemConfig enemySpawnSystemConfig;
+        
+
         // This pattern exposes a read only method to get each field
         public GameObject PlayerPrefab => playerPrefab;
         public GunBehavior StartingGun => startingGun;
         public LevelData LevelData => levelData;
+        
+        
+        // Enemies
+        public EnemySpawnSystemConfig EnemySpawnSystemConfig => enemySpawnSystemConfig;
     }
 
     [System.Serializable]
