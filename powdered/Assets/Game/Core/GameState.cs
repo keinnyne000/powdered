@@ -55,6 +55,15 @@ namespace Game.Core
         /// A list of enemies that died THIS TICK, cleared after each tick by EnemyReapSystem
         /// </summary>
         public readonly HashSet<EnemyObject> DeadEnemies = new();
+
+        /// <summary>
+        /// Get the visuals for a given enemy type.
+        /// Initialized by EnemyVisualsSystem's constructor
+        /// </summary>
+        public Dictionary<EnemyType, GameObject> EnemyPrefabLookup;
+
+        public readonly Dictionary<EnemyObject, GameObject> EnemyVisuals = new();
+
         #endregion
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using Game.Core.Enemies;
 using Game.Core.Guns;
 using Game.Core.Systems;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Core
 {
@@ -21,10 +24,7 @@ namespace Game.Core
         [SerializeField] private EnemySpawnSystemConfig enemySpawnSystemConfig;
 
         [SerializeField] private GameObject enemyPrefab;
-        // this system will need to be expanded in the future to allow for multiple enemy types
-        // probably create a class EnemyVisualLookup { EnemyType, VisualPrefab}
-        // and init to a dictionary on start in game state
-        [SerializeField] private GameObject droneVisualsPrefab;
+        [SerializeField] private List<EnemyVisualLookup> enemyVisualLookups;
         
 
         // This pattern exposes a read only method to get each field
@@ -36,12 +36,19 @@ namespace Game.Core
         // Enemies
         public EnemySpawnSystemConfig EnemySpawnSystemConfig => enemySpawnSystemConfig;
         public GameObject EnemyPrefab => enemyPrefab;
-        public GameObject DroneVisualsPrefab => droneVisualsPrefab;
+        public List<EnemyVisualLookup> EnemyVisualLookups => enemyVisualLookups;
     }
 
     [System.Serializable]
     public class LevelData
     {
+        public GameObject prefab;
+    }
+
+    [System.Serializable]
+    public class EnemyVisualLookup
+    {
+        public EnemyType type;
         public GameObject prefab;
     }
 }

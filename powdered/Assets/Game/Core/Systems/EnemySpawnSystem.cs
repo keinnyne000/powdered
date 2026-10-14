@@ -54,6 +54,7 @@ namespace Game.Core.Systems
             }
             
             var enemy = Object.Instantiate(_config.EnemyPrefab).GetComponent<EnemyObject>();
+            enemy.name = enemyType.ToString();
             if (!_state.Enemies.ContainsKey(enemyType))
                 _state.Enemies.Add(enemyType, new HashSet<EnemyObject>());
             if (!_state.Enemies[enemyType].Add(enemy))

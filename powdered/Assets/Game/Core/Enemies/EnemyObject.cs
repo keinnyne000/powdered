@@ -22,12 +22,6 @@ namespace Game.Core.Enemies
         [HideInInspector] public HashSet<EnemyObject> DeadEnemies = null;
         public event Action<EnemyObject> OnTakeDamage;
         
-        public void BindVisuals(GameObject visualsObject)
-        {
-            visualsObject.transform.SetParent(transform);
-            visualsObject.transform.localPosition = Vector3.zero;
-        }
-
         public void TakeDamage(float amount)
         {
             OnTakeDamage?.Invoke(this);
