@@ -11,5 +11,6 @@ namespace Game.Platform
         public Vector2 Look => _actions.Player.Look.ReadValue<Vector2>();
         public bool JumpPressed => _actions.Player.Jump.WasPressedThisFrame();
         public bool AttackHeld => _actions.Player.Attack.IsPressed();
+        public bool AttackPressed => _actions.Player.Attack.WasPressedThisFrame();
     }
 }

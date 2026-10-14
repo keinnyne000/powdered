@@ -20,6 +20,13 @@ namespace Game.Core
         public float playerGravity;
         public Vector3 moveDirection;
         public bool jumped;
+
+        //Knockback (recoil, explosions, etc)
+        public Vector3 knockbackVelocity;
+        public float knockbackDrag;
+
+        //Gun
+        public float gunCooldown;
     }
 }
 

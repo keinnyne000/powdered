@@ -8,6 +8,7 @@ namespace Game.Core
     Vector2 Look { get; }
     bool JumpPressed { get; }
     bool AttackHeld { get; }
+    bool AttackPressed { get; }
 
     }
 }

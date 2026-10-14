@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Core.Guns;
 using UnityEngine;
 
 namespace Game.Core
@@ -12,8 +13,10 @@ namespace Game.Core
     {
         // Private fields, protects settings from being accidentally changed at runtime
         [SerializeField] private GameObject playerPrefab;
-        
+        [SerializeField] private GunBehavior startingGun;
+
         // This pattern exposes a read only method to get each field
         public GameObject PlayerPrefab => playerPrefab;
+        public GunBehavior StartingGun => startingGun;
     }
 }

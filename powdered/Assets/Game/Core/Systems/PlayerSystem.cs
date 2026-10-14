@@ -32,6 +32,10 @@ namespace Game.Core.Systems
             _state.playerGravity = 20.0f;
             _state.moveDirection = Vector3.zero;
             _state.jumped = false;
+
+            //Knockback
+            _state.knockbackVelocity = Vector3.zero;
+            _state.knockbackDrag = 10.0f;
         }
 
         public void Tick(float deltaTime)
@@ -74,7 +78,8 @@ namespace Game.Core.Systems
                 _state.moveDirection.y -= _state.playerGravity * deltaTime;
             }
 
-            characterController.Move(_state.moveDirection * deltaTime);
+            characterController.Move((_state.moveDirection + _state.knockbackVelocity) * deltaTime);
+            _state.knockbackVelocity = Vector3.MoveTowards(_state.knockbackVelocity, Vector3.zero, _state.knockbackDrag * deltaTime);
             Camera.main.transform.position = _player.transform.position + new Vector3(0,1,0);
         }
 
