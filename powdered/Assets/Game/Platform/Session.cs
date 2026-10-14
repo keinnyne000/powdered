@@ -31,9 +31,12 @@ namespace Game.Platform
             app.Register(new LevelSpawnSystem(State, config));
             app.Register(new PlayerInputSystem(input, commands));
             app.Register(new CommandSystem(State, commands));
-            // Future systems, like the player spawn system can pass config to get a reference
             app.Register(new PlayerSystem(State));
             app.Register(new GunSystem(State, input, config.StartingGun));
+            // Enemies
+            app.Register(new EnemySpawnSystem(State, config));
+            app.Register(new EnemyReapSystem(State));
+            app.Register(new EnemyVisualsSystem(State, config));
         }
 
         public void RequestRestart()

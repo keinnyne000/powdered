@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Game.Core
 {
-    public sealed class Observable<T>
+    public sealed class Observable<T> where T : struct
     {
         static readonly EqualityComparer<T> Comparer = EqualityComparer<T>.Default;
         private T _value;
-        private readonly List<Action> _listeners = new();
+        private readonly List<Action<T>> _listeners = new();
 
         public Observable(T value = default) => _value = value;
         
@@ -22,14 +22,14 @@ namespace Game.Core
             }
         }
 
-        public void Subscribe(Action listener) => _listeners.Add(listener);
+        public void Subscribe(Action<T> listener) => _listeners.Add(listener);
 
-        public void Unsubscribe(Action listener) => _listeners.Remove(listener);
+        public void Unsubscribe(Action<T> listener) => _listeners.Remove(listener);
 
         private void Invoke()
         {
             foreach (var action in _listeners)
-                action.Invoke();
+                action.Invoke(_value);
         }
     }
 }

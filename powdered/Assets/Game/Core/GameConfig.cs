@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using Game.Core.Enemies;
 using Game.Core.Guns;
+using Game.Core.Systems;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Core
 {
@@ -16,15 +20,35 @@ namespace Game.Core
         [SerializeField] private GunBehavior startingGun;
         [SerializeField] private LevelData levelData;
 
+        [Header("Enemies")]
+        [SerializeField] private EnemySpawnSystemConfig enemySpawnSystemConfig;
+
+        [SerializeField] private GameObject enemyPrefab;
+        [SerializeField] private List<EnemyVisualLookup> enemyVisualLookups;
+        
+
         // This pattern exposes a read only method to get each field
         public GameObject PlayerPrefab => playerPrefab;
         public GunBehavior StartingGun => startingGun;
         public LevelData LevelData => levelData;
+        
+        
+        // Enemies
+        public EnemySpawnSystemConfig EnemySpawnSystemConfig => enemySpawnSystemConfig;
+        public GameObject EnemyPrefab => enemyPrefab;
+        public List<EnemyVisualLookup> EnemyVisualLookups => enemyVisualLookups;
     }
 
     [System.Serializable]
     public class LevelData
     {
+        public GameObject prefab;
+    }
+
+    [System.Serializable]
+    public class EnemyVisualLookup
+    {
+        public EnemyType type;
         public GameObject prefab;
     }
 }

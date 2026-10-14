@@ -16,3 +16,9 @@ MonoBehaviour:
   startingGun: {fileID: 11400000, guid: 2f1283c46a20496bbbcfd10955acb4f4, type: 2}
   levelData:
     prefab: {fileID: 5967795094544696173, guid: 1feabd4dc55a1de4eaa67cca71e41adf, type: 3}
+  enemySpawnSystemConfig:
+    timeBetweenSpawns: 5
+  enemyPrefab: {fileID: 7113551622904503216, guid: 0b01780e248d20147a200e2c08fcb539, type: 3}
+  enemyVisualLookups:
+  - type: 0
+    prefab: {fileID: 8058631588466238452, guid: d0248c670c2512b4e88e933a8ebdb34f, type: 3}
