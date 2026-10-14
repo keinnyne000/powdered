@@ -22,6 +22,7 @@ namespace Game.Core
         public float playerGravity;
         public Vector3 moveDirection;
         public bool jumped;
+        public bool isGrounded;
 
         //Knockback (recoil, explosions, etc)
         public Vector3 knockbackVelocity;

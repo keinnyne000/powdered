@@ -27,16 +27,29 @@ namespace Game.Core
         [SerializeField] private List<EnemyVisualLookup> enemyVisualLookups;
         
 
+        [Header("Footsteps")]
+        [SerializeField] private AudioClip[] footstepClips;
+        [SerializeField, Range(0f, 1f)] private float footstepVolume = 0.6f;
+        [Tooltip("Distance walked between steps")]
+        [SerializeField, Min(0.1f)] private float footstepDistance = 2f;
+
+
         // This pattern exposes a read only method to get each field
         public GameObject PlayerPrefab => playerPrefab;
         public GunBehavior StartingGun => startingGun;
         public LevelData LevelData => levelData;
+
         
         
         // Enemies
         public EnemySpawnSystemConfig EnemySpawnSystemConfig => enemySpawnSystemConfig;
         public GameObject EnemyPrefab => enemyPrefab;
         public List<EnemyVisualLookup> EnemyVisualLookups => enemyVisualLookups;
+
+        public AudioClip[] FootstepClips => footstepClips;
+        public float FootstepVolume => footstepVolume;
+        public float StepDistance => footstepDistance;
+
     }
 
     [System.Serializable]
