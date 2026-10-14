@@ -32,6 +32,7 @@ namespace Game.Platform
             app.Register(new PlayerInputSystem(input, commands));
             app.Register(new CommandSystem(State, commands));
             app.Register(new PlayerSystem(State));
+            app.Register(new FootstepSystem(State, config));
             app.Register(new GunSystem(State, input, config.StartingGun));
             // Enemies
             app.Register(new EnemySpawnSystem(State, config));

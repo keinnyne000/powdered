@@ -79,6 +79,7 @@ namespace Game.Core.Systems
             }
 
             characterController.Move((_state.moveDirection + _state.knockbackVelocity) * deltaTime);
+            _state.isGrounded = characterController.isGrounded;
             _state.knockbackVelocity = Vector3.MoveTowards(_state.knockbackVelocity, Vector3.zero, _state.knockbackDrag * deltaTime);
             Camera.main.transform.position = _player.transform.position + new Vector3(0,1,0);
         }
