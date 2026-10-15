@@ -34,7 +34,10 @@ namespace Game.Core.Guns
         public void Fire(GunFireContext context, GameState state)
         {
             if (recoilForce > 0f)
+            {
+                Debug.Log($"Recoil force: {recoilForce}");
                 state.knockbackVelocity -= context.Direction * recoilForce;
+            }
 
             OnFire(context, state);
         }

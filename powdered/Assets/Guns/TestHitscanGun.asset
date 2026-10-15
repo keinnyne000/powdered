@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded6ab4dd4cc4adfb4626b7029dd1025, type: 3}
   m_Name: TestHitscanGun
   m_EditorClassIdentifier: Game.Core::Game.Core.Guns.HitscanGunBehavior
-  fireRate: 4
+  fireRate: 2
   automatic: 0
   damage: 10
   knockbackForce: 5
-  recoilForce: 1
+  recoilForce: 10
   range: 100
   spreadDegrees: 0
   hitMask:
