@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Game.Core.Guns;
+using Game.Core.Guns.Upgrades;
 using UnityEngine;
 
 namespace Game.Core.Systems
@@ -50,6 +52,13 @@ namespace Game.Core.Systems
 
             if (_state.CurrentGun == null || _state.GunCooldown > 0f)
                 return;
+            
+            //UPGRADES
+            if( _state.pistolUpgrades.Count > 0 )
+            {
+                _state.pistolUpgrades[0].effect(_state);
+                _state.pistolUpgrades.RemoveAt(0);
+            }
 
             bool wantsToFire = _state.CurrentGun.Automatic ? _input.AttackHeld : _input.AttackPressed;
             if (!wantsToFire)
