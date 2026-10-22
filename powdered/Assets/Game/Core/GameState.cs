@@ -17,7 +17,10 @@ namespace Game.Core
         public float yRotation;
 
         //Movement
-        public float playerSpeed;
+        public Vector2 playerSpeed;
+        public float maxWalkSpeed;
+        public float playerVelocity;
+        public float playerFriction;
         public float playerJumpForce;
         public float playerGravity;
         public Vector3 moveDirection;

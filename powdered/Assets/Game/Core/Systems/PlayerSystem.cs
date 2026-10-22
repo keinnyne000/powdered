@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,7 +28,10 @@ namespace Game.Core.Systems
             Cursor.visible = false;
 
             //Movement
-            _state.playerSpeed = 5.5f;
+            _state.playerSpeed = Vector2.zero;
+            _state.maxWalkSpeed = 5.5f;
+            _state.playerVelocity = 0.01f;
+            _state.playerFriction = 0.01f;
             _state.playerJumpForce = 8.0f;
             _state.playerGravity = 20.0f;
             _state.moveDirection = Vector3.zero;
@@ -64,9 +68,10 @@ namespace Game.Core.Systems
 
             float oldY = _state.moveDirection.y;
 
-            Vector2 newSpeed = new Vector2(moveVector.y * _state.playerSpeed, moveVector.x * _state.playerSpeed);
+            _state.playerSpeed.y += WalkingHelper(moveVector.y, _state.playerSpeed.y);
+            _state.playerSpeed.x += WalkingHelper(moveVector.x, _state.playerSpeed.x);
 
-            _state.moveDirection = (forward * newSpeed.x) + (right * newSpeed.y);
+            _state.moveDirection = (forward * _state.playerSpeed.y) + (right * _state.playerSpeed.x);
             if (_state.jumped && characterController.isGrounded)
                 _state.moveDirection.y += _state.playerJumpForce;
             else
@@ -74,7 +79,6 @@ namespace Game.Core.Systems
 
             if (!characterController.isGrounded)
             {
-                
                 _state.moveDirection.y -= _state.playerGravity * deltaTime;
             }
 
@@ -82,6 +86,28 @@ namespace Game.Core.Systems
             _state.isGrounded = characterController.isGrounded;
             _state.knockbackVelocity = Vector3.MoveTowards(_state.knockbackVelocity, Vector3.zero, _state.knockbackDrag * deltaTime);
             Camera.main.transform.position = _player.transform.position + new Vector3(0,1,0);
+            Debug.Log(moveVector);
+            Debug.Log(_state.moveDirection);
+        }
+
+        private float WalkingHelper(float moveVector, float speed)
+        {
+            if (moveVector != 0 && Math.Abs(speed) < _state.maxWalkSpeed * Math.Abs(moveVector))
+            {
+                if(Math.Abs(speed) > Math.Abs(speed + moveVector) && speed != 0)
+                {
+                    return _state.playerVelocity * moveVector + (-speed/Math.Abs(speed) * _state.playerFriction);
+                }
+                else
+                {
+                    return _state.playerVelocity * moveVector;
+                }
+            }
+            else if(speed != 0)
+            {
+                return -speed / Math.Abs(speed) * _state.playerFriction;
+            }
+            return 0;
         }
 
         private void Jumped(InputAction.CallbackContext _)
