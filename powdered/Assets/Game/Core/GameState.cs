@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Game.Core.Enemies;
-using Game.Core.Guns.Upgrades;
+using Game.Core.Guns;
 using UnityEngine;
 
 namespace Game.Core
@@ -33,11 +33,10 @@ namespace Game.Core
         public float knockbackDrag;
 
         //GUN VARIABLES
-        public float gunCooldown;
-
-        //Gun Upgrades
-        public List<IUpgrades> pistolUpgrades;
-        public float damageUp;
+        public float GunCooldown = 0f;
+        public GunBehavior CurrentGun;
+        public readonly List<Modifier> Modifiers = new();
+        
         
         // LEVELS
         public GameObject levelParent;

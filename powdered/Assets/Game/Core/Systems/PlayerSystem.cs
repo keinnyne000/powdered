@@ -86,8 +86,6 @@ namespace Game.Core.Systems
             _state.isGrounded = characterController.isGrounded;
             _state.knockbackVelocity = Vector3.MoveTowards(_state.knockbackVelocity, Vector3.zero, _state.knockbackDrag * deltaTime);
             Camera.main.transform.position = _player.transform.position + new Vector3(0,1,0);
-            Debug.Log(moveVector);
-            Debug.Log(_state.moveDirection);
         }
 
         private float WalkingHelper(float moveVector, float speed)
