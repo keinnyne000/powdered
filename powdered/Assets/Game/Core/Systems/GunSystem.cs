@@ -11,6 +11,7 @@ namespace Game.Core.Systems
         readonly GameState _state;
         readonly IInputSource _input;
         readonly GunBehavior _gun;
+        readonly AudioSource _audio;
 
         public GunSystem(GameState state, IInputSource input, GunBehavior gun)
         {
@@ -19,6 +20,9 @@ namespace Game.Core.Systems
             _gun = gun;
 
             _state.gunCooldown = 0f;
+
+            _audio = new GameObject("GunAudio").AddComponent<AudioSource>();
+            _audio.playOnAwake = false;
 
             if (_gun == null)
                 Debug.LogWarning("GunSystem: no Starting Gun set on GameConfig, shooting is disabled");
@@ -41,6 +45,10 @@ namespace Game.Core.Systems
                 return;
 
             _gun.Fire(new GunFireContext(camera.transform.position, camera.transform.forward), _state);
+
+            if (_gun.FireSound != null)
+                _audio.PlayOneShot(_gun.FireSound, _gun.FireVolume);
+
             _state.gunCooldown = _gun.SecondsBetweenShots;
         }
     }
