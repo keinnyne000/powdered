@@ -17,7 +17,7 @@ namespace Game.Core.Guns
         public float MaxRange => range;
         public float SpreadDegrees => spreadDegrees;
 
-        protected override void OnFire(GunFireContext context, GameState state)
+        protected override void OnFire(ShootGameAction context, GameState state)
         {
             Vector3 direction = ApplySpread(context.Direction);
 
@@ -34,7 +34,7 @@ namespace Game.Core.Guns
 
             IDamageable damageable = hit.collider.GetComponentInParent<IDamageable>();
             if (damageable != null)
-                damageable.TakeDamage(Damage);
+                damageable.TakeDamage(Damage + context.BonusDamage);
         }
 
         private Vector3 ApplySpread(Vector3 direction)

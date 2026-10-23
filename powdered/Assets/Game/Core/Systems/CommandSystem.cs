@@ -18,6 +18,7 @@
 
         public void Apply(ICommand command)
         {
+            return;
             if(command is MoveInput m && m.Direction != UnityEngine.Vector2.zero)
                 UnityEngine.Debug.Log($"Move: {m.Direction}");
             // TODO: Handle commands, probably using some kind of Command Router
