@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Game.Core.Guns;
-using Game.Core.Guns.Upgrades;
 using UnityEngine;
 
 namespace Game.Core.Systems
@@ -20,7 +18,6 @@ namespace Game.Core.Systems
             _input = input;
             _gun = gun;
 
-            _state.gunCooldown = 0f;
 
             _audio = new GameObject("GunAudio").AddComponent<AudioSource>();
             _audio.playOnAwake = false;
@@ -31,8 +28,6 @@ namespace Game.Core.Systems
 
             if (_gun == null)
             if (gun == null)
-                Debug.LogWarning("GunSystem: no Starting Gun set on GameConfig, shooting is disabled");
-            _state = state;
             
             // TODO: This will be replaced by whatever system gives us guns!
             state.CurrentGun = gun;
@@ -52,13 +47,6 @@ namespace Game.Core.Systems
 
             if (_state.CurrentGun == null || _state.GunCooldown > 0f)
                 return;
-            
-            //UPGRADES
-            if( _state.pistolUpgrades.Count > 0 )
-            {
-                _state.pistolUpgrades[0].effect(_state);
-                _state.pistolUpgrades.RemoveAt(0);
-            }
 
             bool wantsToFire = _state.CurrentGun.Automatic ? _input.AttackHeld : _input.AttackPressed;
             if (!wantsToFire)
