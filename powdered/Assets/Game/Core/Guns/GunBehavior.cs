@@ -1,3 +1,4 @@
+using Game.Core.Systems;
 using UnityEngine;
 
 namespace Game.Core.Guns
@@ -31,17 +32,18 @@ namespace Game.Core.Guns
         /// <summary>
         /// Fires the gun once. Applies recoil to the shooter, then runs the gun specific behavior.
         /// </summary>
-        public void Fire(GunFireContext context, GameState state)
+        public void Fire(ShootGameAction context, GameState state)
         {
             if (recoilForce > 0f)
                 state.knockbackVelocity -= context.Direction * recoilForce;
 
+            state.GunCooldown = state.CurrentGun.SecondsBetweenShots;
             OnFire(context, state);
         }
 
         /// <summary>
         /// What actually happens when this gun shoots (raycast, spawn a projectile, etc)
         /// </summary>
-        protected abstract void OnFire(GunFireContext context, GameState state);
+        protected abstract void OnFire(ShootGameAction context, GameState state);
     }
 }

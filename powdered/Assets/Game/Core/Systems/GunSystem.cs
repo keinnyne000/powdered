@@ -10,29 +10,34 @@ namespace Game.Core.Systems
     {
         readonly GameState _state;
         readonly IInputSource _input;
-        readonly GunBehavior _gun;
 
         public GunSystem(GameState state, IInputSource input, GunBehavior gun)
         {
-            _state = state;
             _input = input;
-            _gun = gun;
-
-            _state.gunCooldown = 0f;
-
-            if (_gun == null)
+            if (gun == null)
                 Debug.LogWarning("GunSystem: no Starting Gun set on GameConfig, shooting is disabled");
+            _state = state;
+            
+            // TODO: This will be replaced by whatever system gives us guns!
+            state.CurrentGun = gun;
+            
+
+            
+            // TODO: This will be moved to whatever our 'upgrade pickup' system is.
+            var mod = new Modifier("Example-BonusDamage-Modifier")
+                .Register<ShootGameAction>((a, s) => a.BonusDamage += 1);
+            _state.Modifiers.Add(mod);
         }
 
         public void Tick(float deltaTime)
         {
-            if (_state.gunCooldown > 0f)
-                _state.gunCooldown -= deltaTime;
+            if (_state.GunCooldown > 0f)
+                _state.GunCooldown -= deltaTime;
 
-            if (_gun == null || _state.gunCooldown > 0f)
+            if (_state.CurrentGun == null || _state.GunCooldown > 0f)
                 return;
 
-            bool wantsToFire = _gun.Automatic ? _input.AttackHeld : _input.AttackPressed;
+            bool wantsToFire = _state.CurrentGun.Automatic ? _input.AttackHeld : _input.AttackPressed;
             if (!wantsToFire)
                 return;
 
@@ -40,8 +45,7 @@ namespace Game.Core.Systems
             if (camera == null)
                 return;
 
-            _gun.Fire(new GunFireContext(camera.transform.position, camera.transform.forward), _state);
-            _state.gunCooldown = _gun.SecondsBetweenShots;
+            new ShootGameAction(camera.transform.position, camera.transform.forward).Trigger(_state);
         }
     }
 }
