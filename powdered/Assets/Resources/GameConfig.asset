@@ -22,3 +22,7 @@ MonoBehaviour:
   enemyVisualLookups:
   - type: 0
     prefab: {fileID: 8058631588466238452, guid: d0248c670c2512b4e88e933a8ebdb34f, type: 3}
+  footstepClips:
+  - {fileID: 8300000, guid: c8a380a1b1851e145b7f629c1c6d0172, type: 3}
+  footstepVolume: 0.42
+  footstepDistance: 2
