@@ -21,12 +21,18 @@ namespace Game.Core.Guns
         [Tooltip("Pushes the shooter backwards when firing")]
         [SerializeField, Min(0f)] private float recoilForce;
 
+        [Header("Audio")]
+        [SerializeField] private AudioClip fireSound;
+        [SerializeField, Range(0f, 1f)] private float fireVolume = 1f;
+
         public float FireRate => fireRate;
         public bool Automatic => automatic;
         public float Damage => damage;
         public float KnockbackForce => knockbackForce;
         public float RecoilForce => recoilForce;
         public float SecondsBetweenShots => 1f / fireRate;
+        public AudioClip FireSound => fireSound;
+        public float FireVolume => fireVolume;
 
         /// <summary>
         /// Fires the gun once. Applies recoil to the shooter, then runs the gun specific behavior.
