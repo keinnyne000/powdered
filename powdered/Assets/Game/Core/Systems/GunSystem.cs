@@ -10,15 +10,12 @@ namespace Game.Core.Systems
     {
         readonly GameState _state;
         readonly IInputSource _input;
-        readonly GunBehavior _gun;
         readonly AudioSource _audio;
 
         public GunSystem(GameState state, IInputSource input, GunBehavior gun)
         {
             _input = input;
-            _gun = gun;
-
-
+            
             _audio = new GameObject("GunAudio").AddComponent<AudioSource>();
             _audio.playOnAwake = false;
             if (gun == null)
@@ -52,10 +49,10 @@ namespace Game.Core.Systems
 
             
 
-            if (_gun.FireSound != null)
-                _audio.PlayOneShot(_gun.FireSound, _gun.FireVolume);
+            if (_state.CurrentGun.FireSound != null)
+                _audio.PlayOneShot(_state.CurrentGun.FireSound, _state.CurrentGun.FireVolume);
 
-            _state.GunCooldown = _gun.SecondsBetweenShots;
+            _state.GunCooldown = _state.CurrentGun.SecondsBetweenShots;
             new ShootGameAction(camera.transform.position, camera.transform.forward).Trigger(_state);
         }
     }
