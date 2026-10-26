@@ -21,6 +21,10 @@ namespace Game.Core.Systems
 
             _audio = new GameObject("GunAudio").AddComponent<AudioSource>();
             _audio.playOnAwake = false;
+            if (gun == null)
+                Debug.LogWarning("GunSystem: no Starting Gun set on GameConfig, shooting is disabled");
+            _state = state;
+            
             // TODO: This will be replaced by whatever system gives us guns!
             state.CurrentGun = gun;
             
