@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Game.Core.Enemies;
 using Game.Core.Guns;
-using Game.Core.Guns.Upgrades;
 using UnityEngine;
 
 namespace Game.Core

@@ -21,18 +21,8 @@ namespace Game.Core.Systems
 
             _audio = new GameObject("GunAudio").AddComponent<AudioSource>();
             _audio.playOnAwake = false;
-            _state.pistolUpgrades = new List<IUpgrades>
-            {
-                new IncreaseDamage()
-            };
-
-            if (_gun == null)
-            if (gun == null)
-            
             // TODO: This will be replaced by whatever system gives us guns!
             state.CurrentGun = gun;
-            
-
             
             // TODO: This will be moved to whatever our 'upgrade pickup' system is.
             var mod = new Modifier("Example-BonusDamage-Modifier")
@@ -58,12 +48,10 @@ namespace Game.Core.Systems
 
             
 
-            _gun.Fire(new GunFireContext(camera.transform.position, camera.transform.forward), _state);
-
             if (_gun.FireSound != null)
                 _audio.PlayOneShot(_gun.FireSound, _gun.FireVolume);
 
-            _state.gunCooldown = _gun.SecondsBetweenShots;
+            _state.GunCooldown = _gun.SecondsBetweenShots;
             new ShootGameAction(camera.transform.position, camera.transform.forward).Trigger(_state);
         }
     }
