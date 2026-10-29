@@ -18,6 +18,9 @@ namespace Game.Core.Systems
         // later down the line.
         [FormerlySerializedAs("enemySpawnTime")]
         [SerializeField] public float timeBetweenSpawns;
+
+        [Tooltip("Max enemies alive at once. Spawning pauses until one dies")]
+        [SerializeField, Min(0)] public int maxEnemies = 5;
     }
     
     public class EnemySpawnSystem : ISimulationSystem
@@ -49,11 +52,24 @@ namespace Game.Core.Systems
             
             if (Time.time - _state.TimeOfLastSpawn > _config.EnemySpawnSystemConfig.timeBetweenSpawns)
             {
-                // Currently, we ALWAYS spawn a drone. This should be updated later.
-                // TODO: update to spawn multiple types of enemies (Enemy Strategist)
-                Spawn(EnemyType.Drone);
+                // At the cap, skip this spawn and restart the timer,
+                // so a new enemy shows up one full interval after a slot frees up
+                if (AliveEnemyCount() < _config.EnemySpawnSystemConfig.maxEnemies)
+                {
+                    // Currently, we ALWAYS spawn a drone. This should be updated later.
+                    // TODO: update to spawn multiple types of enemies (Enemy Strategist)
+                    Spawn(EnemyType.Drone);
+                }
                 _state.TimeOfLastSpawn = Time.time;
             }
+        }
+
+        int AliveEnemyCount()
+        {
+            int count = 0;
+            foreach (var enemies in _state.Enemies.Values)
+                count += enemies.Count;
+            return count;
         }
 
         void Spawn(EnemyType enemyType)

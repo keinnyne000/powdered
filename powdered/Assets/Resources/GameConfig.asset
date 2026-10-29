@@ -18,6 +18,7 @@ MonoBehaviour:
     prefab: {fileID: 5967795094544696173, guid: 1feabd4dc55a1de4eaa67cca71e41adf, type: 3}
   enemySpawnSystemConfig:
     timeBetweenSpawns: 5
+    maxEnemies: 5
   enemyPrefab: {fileID: 7113551622904503216, guid: 0b01780e248d20147a200e2c08fcb539, type: 3}
   enemyVisualLookups:
   - type: 0
