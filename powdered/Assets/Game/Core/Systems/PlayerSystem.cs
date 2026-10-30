@@ -55,6 +55,7 @@ namespace Game.Core.Systems
             Camera.main.transform.rotation = Quaternion.Euler(_state.xRotation, _state.yRotation, 0);
             _player.transform.rotation = Quaternion.Euler(0, _state.yRotation, 0);
 
+
             //Movement
             Vector2 moveVector = _actions.Default.Move.ReadValue<Vector2>();
 
@@ -72,11 +73,13 @@ namespace Game.Core.Systems
             
             if (!moveVector.Equals(Vector2.zero) && currentSpeed < _state.maxWalkSpeed)
             {
-                _state.moveDirection += _state.playerAcceleration * ((forward * (moveVector / moveVector.magnitude * _state.maxWalkSpeed).y) + (right * (moveVector / moveVector.magnitude * _state.maxWalkSpeed).x));
+                Vector3 newMoveDirection = (forward * (moveVector / moveVector.magnitude).y) + (right * (moveVector / moveVector.magnitude).x);
+                _state.moveDirection += newMoveDirection / newMoveDirection.magnitude * _state.playerAcceleration;
             }
             else if(currentSpeed != 0)
             {
-                _state.moveDirection -= new Vector3(_state.moveDirection.x,0,_state.moveDirection.z) * _state.playerFriction;
+                Vector3 frictionDirection = new Vector3(_state.moveDirection.x,0,_state.moveDirection.z);
+                _state.moveDirection -= frictionDirection / frictionDirection.magnitude * _state.playerFriction;
             }
 
             // _state.playerSpeed.y += WalkingHelper(moveVector.y, _state.playerSpeed.y);
@@ -98,7 +101,6 @@ namespace Game.Core.Systems
             _state.isGrounded = characterController.isGrounded;
             _state.knockbackVelocity = Vector3.MoveTowards(_state.knockbackVelocity, Vector3.zero, _state.knockbackDrag * deltaTime);
             Camera.main.transform.position = _player.transform.position + new Vector3(0,1,0);
-            Debug.Log(new Vector2(_state.moveDirection.z,_state.moveDirection.x).magnitude);
             Debug.Log(_state.moveDirection);
         }
 
