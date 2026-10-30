@@ -20,7 +20,7 @@ namespace Game.Core
         //Movement
         public Vector2 playerSpeed;
         public float maxWalkSpeed;
-        public float playerVelocity;
+        public float playerAcceleration;
         public float playerFriction;
         public float playerJumpForce;
         public float playerGravity;
