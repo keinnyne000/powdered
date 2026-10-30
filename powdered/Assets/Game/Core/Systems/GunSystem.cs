@@ -10,29 +10,36 @@ namespace Game.Core.Systems
     {
         readonly GameState _state;
         readonly IInputSource _input;
-        readonly GunBehavior _gun;
+        readonly AudioSource _audio;
 
         public GunSystem(GameState state, IInputSource input, GunBehavior gun)
         {
-            _state = state;
             _input = input;
-            _gun = gun;
-
-            _state.gunCooldown = 0f;
-
-            if (_gun == null)
+            
+            _audio = new GameObject("GunAudio").AddComponent<AudioSource>();
+            _audio.playOnAwake = false;
+            if (gun == null)
                 Debug.LogWarning("GunSystem: no Starting Gun set on GameConfig, shooting is disabled");
+            _state = state;
+            
+            // TODO: This will be replaced by whatever system gives us guns!
+            state.CurrentGun = gun;
+            
+            // TODO: This will be moved to whatever our 'upgrade pickup' system is.
+            var mod = new Modifier("Example-BonusDamage-Modifier")
+                .Register<ShootGameAction>((a, s) => a.BonusDamage += 1);
+            _state.Modifiers.Add(mod);
         }
 
         public void Tick(float deltaTime)
         {
-            if (_state.gunCooldown > 0f)
-                _state.gunCooldown -= deltaTime;
+            if (_state.GunCooldown > 0f)
+                _state.GunCooldown -= deltaTime;
 
-            if (_gun == null || _state.gunCooldown > 0f)
+            if (_state.CurrentGun == null || _state.GunCooldown > 0f)
                 return;
 
-            bool wantsToFire = _gun.Automatic ? _input.AttackHeld : _input.AttackPressed;
+            bool wantsToFire = _state.CurrentGun.Automatic ? _input.AttackHeld : _input.AttackPressed;
             if (!wantsToFire)
                 return;
 
@@ -40,8 +47,13 @@ namespace Game.Core.Systems
             if (camera == null)
                 return;
 
-            _gun.Fire(new GunFireContext(camera.transform.position, camera.transform.forward), _state);
-            _state.gunCooldown = _gun.SecondsBetweenShots;
+            
+
+            if (_state.CurrentGun.FireSound != null)
+                _audio.PlayOneShot(_state.CurrentGun.FireSound, _state.CurrentGun.FireVolume);
+
+            _state.GunCooldown = _state.CurrentGun.SecondsBetweenShots;
+            new ShootGameAction(camera.transform.position, camera.transform.forward).Trigger(_state);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Core.Enemies;
+using Game.Core.Guns;
 using UnityEngine;
 
 namespace Game.Core
@@ -31,10 +32,13 @@ namespace Game.Core
         public Vector3 knockbackVelocity;
         public float knockbackDrag;
 
-        //Gun
-        public float gunCooldown;
+        //GUN VARIABLES
+        public float GunCooldown = 0f;
+        public GunBehavior CurrentGun;
+        public readonly List<Modifier> Modifiers = new();
         
-        // Levels
+        
+        // LEVELS
         public GameObject levelParent;
 
         #region Enemies

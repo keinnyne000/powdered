@@ -1,3 +1,4 @@
+using Game.Core.Systems;
 using UnityEngine;
 
 namespace Game.Core.Guns
@@ -21,27 +22,34 @@ namespace Game.Core.Guns
         [Tooltip("Pushes the shooter backwards when firing")]
         [SerializeField, Min(0f)] private float recoilForce;
 
+        [Header("Audio")]
+        [SerializeField] private AudioClip fireSound;
+        [SerializeField, Range(0f, 1f)] private float fireVolume = 1f;
+
         public float FireRate => fireRate;
         public bool Automatic => automatic;
         public float Damage => damage;
         public float KnockbackForce => knockbackForce;
         public float RecoilForce => recoilForce;
         public float SecondsBetweenShots => 1f / fireRate;
+        public AudioClip FireSound => fireSound;
+        public float FireVolume => fireVolume;
 
         /// <summary>
         /// Fires the gun once. Applies recoil to the shooter, then runs the gun specific behavior.
         /// </summary>
-        public void Fire(GunFireContext context, GameState state)
+        public void Fire(ShootGameAction context, GameState state)
         {
             if (recoilForce > 0f)
                 state.knockbackVelocity -= context.Direction * recoilForce;
 
+            state.GunCooldown = state.CurrentGun.SecondsBetweenShots;
             OnFire(context, state);
         }
 
         /// <summary>
         /// What actually happens when this gun shoots (raycast, spawn a projectile, etc)
         /// </summary>
-        protected abstract void OnFire(GunFireContext context, GameState state);
+        protected abstract void OnFire(ShootGameAction context, GameState state);
     }
 }
