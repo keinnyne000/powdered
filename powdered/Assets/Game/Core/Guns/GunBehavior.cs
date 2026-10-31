@@ -18,7 +18,7 @@ namespace Game.Core.Guns
         [Header("Effects")]
         [SerializeField, Min(0f)] private float damage = 10f;
         [Tooltip("Force applied to whatever gets hit")]
-        [SerializeField, Min(0f)] private float knockbackForce = 5f;
+        [SerializeField, Min(0f)] private float knockbackForce = 20f;
         [Tooltip("Pushes the shooter backwards when firing")]
         [SerializeField, Min(0f)] private float recoilForce;
 
@@ -40,8 +40,8 @@ namespace Game.Core.Guns
         /// </summary>
         public void Fire(ShootGameAction context, GameState state)
         {
-            if (recoilForce > 0f)
-                state.knockbackVelocity -= context.Direction * recoilForce;
+            state.knockbackVelocity = -context.Direction * knockbackForce;
+            state.moveDirection += state.knockbackVelocity;
 
             state.GunCooldown = state.CurrentGun.SecondsBetweenShots;
             OnFire(context, state);
