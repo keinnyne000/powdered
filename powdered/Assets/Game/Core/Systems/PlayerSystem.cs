@@ -13,6 +13,7 @@ namespace Game.Core.Systems
         public PlayerSystem(GameState state)
         {
             _state = state;
+            _state.playerTransform = _player.transform;
             _actions = new();
             _actions.Enable();
             _actions.Default.Jump.started += Jumped;

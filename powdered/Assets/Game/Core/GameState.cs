@@ -11,6 +11,8 @@ namespace Game.Core
         //   make sure to wrap it with Observable.cs
 
         // PLAYER VARIABLES
+        public Transform playerTransform;
+
         //Camera
         public float sensX;
         public float sensY;
@@ -71,6 +73,12 @@ namespace Game.Core
         public Dictionary<EnemyType, GameObject> EnemyPrefabLookup;
 
         public readonly Dictionary<EnemyObject, GameObject> EnemyVisuals = new();
+
+        /// <summary>
+        /// enemies touching the player THIS TICK, cleared at the statr if each new tick by DroneMovementSystem
+        /// a future damage system reads this
+        /// </summary>
+        public readonly HashSet<EnemyObject> PlayerContacts = new();
 
         #endregion
     }
