@@ -16,6 +16,23 @@ MonoBehaviour:
   startingGun: {fileID: 11400000, guid: 2f1283c46a20496bbbcfd10955acb4f4, type: 2}
   levelData:
     prefab: {fileID: 5967795094544696173, guid: 1feabd4dc55a1de4eaa67cca71e41adf, type: 3}
+  droneConfig:
+    maxSpeed: 8
+    hoverHeight: 2
+    diveDistance: 6
+    kp: 8
+    ki: 0
+    kd: 0.5
+    obstacleMask:
+      serializedVersion: 2
+      m_Bits: 64
+    whiskerLength: 4
+    whiskerRadius: 0.4
+    whiskerSpread: 1
+    avoidStrength: 2
+    climbBias: 1.5
+    contactDistance: 1.5
+    slowDownDistance: 1.5
   enemySpawnSystemConfig:
     timeBetweenSpawns: 5
     maxEnemies: 5
