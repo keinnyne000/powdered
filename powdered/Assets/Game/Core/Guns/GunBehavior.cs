@@ -46,7 +46,7 @@ namespace Game.Core.Guns
             knockbackForce = 20f;
             state.knockbackVelocity = -context.Direction / context.Direction.magnitude * knockbackForce;
             state.moveDirection += state.knockbackVelocity;
-            if(Math.Abs(state.moveDirection.y + state.knockbackVelocity.y) > state.moveDirection.y)
+            if(Math.Abs(state.moveDirection.y + state.knockbackVelocity.y) > Math.Abs(state.moveDirection.y))
             {
                 state.moveDirection.y = state.knockbackVelocity.y;
             }
