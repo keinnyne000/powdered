@@ -12,6 +12,7 @@ namespace Game.Core
 
         // PLAYER VARIABLES
         public Transform playerTransform;
+        public readonly Observable<float> PlayerHealth = new(100f);
 
         //Camera
         public float sensX;
@@ -79,7 +80,11 @@ namespace Game.Core
         /// a future damage system reads this
         /// </summary>
         public readonly HashSet<EnemyObject> PlayerContacts = new();
-
+        
+        /// <summary>
+        /// enemy projectiles currently in flight moved and removed by projectile system
+        /// </summary>
+        public readonly List<EnemyProjectile> Projectiles = new();
         #endregion
     }
 }
