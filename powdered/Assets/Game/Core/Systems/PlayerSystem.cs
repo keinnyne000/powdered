@@ -136,7 +136,6 @@ namespace Game.Core.Systems
             characterController.Move(_state.moveDirection * deltaTime);
             _state.isGrounded = characterController.isGrounded;
             Camera.main.transform.position = _player.transform.position + new Vector3(0,1,0);
-            Debug.Log(_state.knockbackVelocity);
         }
 
         private void Jumped(InputAction.CallbackContext _)

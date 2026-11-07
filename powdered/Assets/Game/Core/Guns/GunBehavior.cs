@@ -18,11 +18,8 @@ namespace Game.Core.Guns
 
         [Header("Effects")]
         [SerializeField, Min(0f)] private float damage = 10f;
-        [Tooltip("Force applied to whatever gets hit")]
-        [SerializeField, Min(0f)] private float knockbackForce = 1000f;
+        [Tooltip("The force applied to the player when they shoot")]
         [SerializeField, Min(0f)] private float knockbackForce = 20f;
-        [Tooltip("Pushes the shooter backwards when firing")]
-        [SerializeField, Min(0f)] private float recoilForce;
 
         [Header("Audio")]
         [SerializeField] private AudioClip fireSound;
@@ -32,7 +29,6 @@ namespace Game.Core.Guns
         public bool Automatic => automatic;
         public float Damage => damage;
         public float KnockbackForce => knockbackForce;
-        public float RecoilForce => recoilForce;
         public float SecondsBetweenShots => 1f / fireRate;
         public AudioClip FireSound => fireSound;
         public float FireVolume => fireVolume;
@@ -44,7 +40,6 @@ namespace Game.Core.Guns
         {
             Debug.Log(context.Direction);
             Debug.Log(-context.Direction / context.Direction.magnitude * knockbackForce);
-            knockbackForce = 20f;
             state.knockbackVelocity = -context.Direction / context.Direction.magnitude * knockbackForce;
             state.moveDirection += state.knockbackVelocity;
             if(Math.Abs(state.moveDirection.y + state.knockbackVelocity.y) > Math.Abs(state.moveDirection.y))
