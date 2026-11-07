@@ -15,14 +15,14 @@ namespace Game.Core.Guns
 
     public class ShootGameAction : GameAction
     {
-        public Vector3 Origin;
         public Vector3 Direction;
+        public Vector3 Origin;
         public float BonusDamage;
 
         public ShootGameAction(Vector3 origin, Vector3 direction)
         {
-            Origin = origin;
             Direction = direction;
+            Origin = origin;
             BonusDamage = 0f;
         }
 

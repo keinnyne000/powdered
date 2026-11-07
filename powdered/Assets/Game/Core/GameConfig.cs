@@ -21,6 +21,7 @@ namespace Game.Core
         [SerializeField] private LevelData levelData;
 
         [Header("Enemies")]
+        [SerializeField] private DroneConfig droneConfig;
         [SerializeField] private EnemySpawnSystemConfig enemySpawnSystemConfig;
 
         [SerializeField] private GameObject enemyPrefab;
@@ -45,6 +46,8 @@ namespace Game.Core
         public EnemySpawnSystemConfig EnemySpawnSystemConfig => enemySpawnSystemConfig;
         public GameObject EnemyPrefab => enemyPrefab;
         public List<EnemyVisualLookup> EnemyVisualLookups => enemyVisualLookups;
+
+        public DroneConfig DroneConfig => droneConfig;
 
         public AudioClip[] FootstepClips => footstepClips;
         public float FootstepVolume => footstepVolume;

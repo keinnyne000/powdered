@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5351546801937051694}
   - component: {fileID: 94753341813823552}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1725123971396550300}
   - component: {fileID: 418746791559039279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

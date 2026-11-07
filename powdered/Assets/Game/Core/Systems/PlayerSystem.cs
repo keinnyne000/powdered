@@ -13,6 +13,7 @@ namespace Game.Core.Systems
         public PlayerSystem(GameState state)
         {
             _state = state;
+            _state.playerTransform = _player.transform;
             _actions = new();
             _actions.Enable();
             _actions.Default.Jump.started += Jumped;
@@ -96,7 +97,7 @@ namespace Game.Core.Systems
 
                 oldY = -0.1f;
             }
-            else
+            else if(currentSpeed != 0 && characterController.isGrounded)
             {
                 _state.maxWalkSpeed = 10f;
                 _state.playerAcceleration = 0.05f;
@@ -120,12 +121,8 @@ namespace Game.Core.Systems
                 }
             }
 
-
-            //jumping
             if (_state.jumped && characterController.isGrounded)
-            {
                 _state.moveDirection.y = _state.playerJumpForce;
-            }
             else
             {
                 _state.moveDirection.y = oldY;
@@ -136,11 +133,10 @@ namespace Game.Core.Systems
                 _state.moveDirection.y -= _state.playerGravity * deltaTime;
             }
 
-            //move chartacter
             characterController.Move(_state.moveDirection * deltaTime);
             _state.isGrounded = characterController.isGrounded;
             Camera.main.transform.position = _player.transform.position + new Vector3(0,1,0);
-            Debug.Log(currentSpeed);
+            Debug.Log(_state.knockbackVelocity);
         }
 
         private void Jumped(InputAction.CallbackContext _)

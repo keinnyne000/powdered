@@ -20,6 +20,7 @@ namespace Game.Core.Guns
         [SerializeField, Min(0f)] private float damage = 10f;
         [Tooltip("Force applied to whatever gets hit")]
         [SerializeField, Min(0f)] private float knockbackForce = 1000f;
+        [SerializeField, Min(0f)] private float knockbackForce = 20f;
         [Tooltip("Pushes the shooter backwards when firing")]
         [SerializeField, Min(0f)] private float recoilForce;
 
@@ -50,6 +51,8 @@ namespace Game.Core.Guns
             {
                 state.moveDirection.y = state.knockbackVelocity.y;
             }
+            state.knockbackVelocity = -context.Direction * knockbackForce;
+            state.moveDirection += state.knockbackVelocity;
 
             state.GunCooldown = state.CurrentGun.SecondsBetweenShots;
             OnFire(context, state);
