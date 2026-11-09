@@ -25,6 +25,7 @@ namespace Game.Core.Systems
                 // Visuals are children of the enemy, so they get destroyed with it below.
                 // Drop the lookup entry here so EnemyVisuals doesn't keep dead enemies forever.
                 _state.EnemyVisuals.Remove(enemy);
+                _state.EnemiesKilled++;
                 Debug.Log($"Destroying: {enemy}");
                 Object.Destroy(enemy.gameObject);
             }

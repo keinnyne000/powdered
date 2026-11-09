@@ -41,6 +41,8 @@ namespace Game.Platform
             app.Register(new ProjectileSystem(State, config));
             app.Register(new EnemyReapSystem(State));
             app.Register(new EnemyVisualsSystem(State, config));
+            // Upgrades
+            app.Register(new GunPartRewardSystem(State, config));
         }
 
         public void RequestRestart()
