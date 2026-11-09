@@ -24,6 +24,7 @@ namespace Game.Core.Guns
             if (!Physics.Raycast(context.Origin, direction, out RaycastHit hit, range, hitMask, QueryTriggerInteraction.Ignore))
             {
                 Debug.DrawRay(context.Origin, direction * range, Color.yellow, 0.5f);
+                state.ComboHits = 0;
                 return;
             }
 
@@ -34,7 +35,15 @@ namespace Game.Core.Guns
 
             IDamageable damageable = hit.collider.GetComponentInParent<IDamageable>();
             if (damageable != null)
+            {
                 damageable.TakeDamage(Damage + context.BonusDamage);
+                state.ComboHits++;
+            }
+            else
+            {
+                // Hit a wall or the floor, counts as a miss
+                state.ComboHits = 0;
+            }
         }
 
         private Vector3 ApplySpread(Vector3 direction)
