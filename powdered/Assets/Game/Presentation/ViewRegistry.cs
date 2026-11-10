@@ -6,6 +6,6 @@ namespace Game.Presentation
 {
     public class ViewRegistry : MonoBehaviour
     {
-        public List<IGameView> views = new();
+        public IReadOnlyList<IGameView> views => GetComponentsInChildren<IGameView>(true);
     }
 }

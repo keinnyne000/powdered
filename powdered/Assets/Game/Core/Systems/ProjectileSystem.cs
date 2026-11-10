@@ -52,6 +52,7 @@ namespace Game.Core.Systems
 
         void DamagePlayer(float amount)
         {
+            _state.TimeSinceLastHit = 0f;
             float before = _state.PlayerHealth.Value;
             float after = Mathf.Max(0f, before - amount);
             _state.PlayerHealth.Value = after;

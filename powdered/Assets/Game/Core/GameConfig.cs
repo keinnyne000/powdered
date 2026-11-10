@@ -34,14 +34,22 @@ namespace Game.Core
         [Tooltip("Distance walked between steps")]
         [SerializeField, Min(0.1f)] private float footstepDistance = 2f;
 
+        [Header("Player Health")]
+        [Tooltip("Seconds without being hit before health starts regenerating")]
+        [SerializeField, Min(0f)] private float healthRegenDelay = 3f;
+        [Tooltip("Health restored per second once regenerating")]
+        [SerializeField, Min(0f)] private float healthRegenPerSecond = 25f;
+
 
         // This pattern exposes a read only method to get each field
         public GameObject PlayerPrefab => playerPrefab;
         public GunBehavior StartingGun => startingGun;
         public LevelData LevelData => levelData;
+        public float HealthRegenDelay => healthRegenDelay;
+        public float HealthRegenPerSecond => healthRegenPerSecond;
 
-        
-        
+
+
         // Enemies
         public EnemySpawnSystemConfig EnemySpawnSystemConfig => enemySpawnSystemConfig;
         public GameObject EnemyPrefab => enemyPrefab;

@@ -18,8 +18,9 @@ MonoBehaviour:
     prefab: {fileID: 5967795094544696173, guid: 1feabd4dc55a1de4eaa67cca71e41adf, type: 3}
   droneConfig:
     maxSpeed: 8
+    followDistance: 12
     hoverHeight: 2
-    diveDistance: 6
+    slowDownDistance: 1.5
     kp: 8
     ki: 0
     kd: 0.5
@@ -31,8 +32,17 @@ MonoBehaviour:
     whiskerSpread: 1
     avoidStrength: 2
     climbBias: 1.5
+    projectilePrefab: {fileID: 1367999073698067882, guid: 18cbbfbe7016bec44b2360b8d312e3ce, type: 3}
+    fireInterval: 2
+    fireRange: 20
+    projectileSpeed: 12
+    projectileDamage: 34
+    projectileRadius: 0.2
+    projectileLifetime: 6
+    projectileHitMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
     contactDistance: 1.5
-    slowDownDistance: 1.5
   enemySpawnSystemConfig:
     timeBetweenSpawns: 5
     maxEnemies: 5
@@ -44,3 +54,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c8a380a1b1851e145b7f629c1c6d0172, type: 3}
   footstepVolume: 0.42
   footstepDistance: 2
+  healthRegenDelay: 3
+  healthRegenPerSecond: 25
