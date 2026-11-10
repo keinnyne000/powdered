@@ -37,6 +37,7 @@ namespace Game.Core.Systems
             _state.playerGravity = 20.0f;
             _state.moveDirection = Vector3.zero;
             _state.jumped = false;
+            Vector3 strafeDirection = Vector3.zero;
 
             //Knockback
             _state.knockbackVelocity = Vector3.zero;
@@ -73,18 +74,28 @@ namespace Game.Core.Systems
             float currentSpeed = new Vector2(_state.moveDirection.z,_state.moveDirection.x).magnitude;
             
             //walking
-            if(characterController.isGrounded){
+            if (characterController.isGrounded){
                 _state.maxWalkSpeed = 5.5f;
                 _state.playerAcceleration = 0.02f;
                 _state.playerFriction = 0.02f;
 
-                if (!moveVector.Equals(Vector2.zero) && currentSpeed < _state.maxWalkSpeed)
+                if (!moveVector.Equals(Vector2.zero))
                 {
                     Vector3 newMoveDirection = (forward * (moveVector / moveVector.magnitude).y) + (right * (moveVector / moveVector.magnitude).x);
+                    if (currentSpeed > _state.maxWalkSpeed)
+                    {
+                        _state.playerAcceleration = 0.04f;
+                        _state.playerFriction = 0.04f;
+                        if (Vector3.Angle(newMoveDirection, _state.moveDirection) < 90)
+                        {
+                            Debug.Log("GROUND STRAFE");
+                            newMoveDirection = Vector3.Project(newMoveDirection, new Vector3(-_state.moveDirection.z, 0 , _state.moveDirection.x));
+                        }
+                    }
                     _state.moveDirection += newMoveDirection / newMoveDirection.magnitude * _state.playerAcceleration;
                 }
                 
-                if(moveVector.Equals(Vector2.zero) || currentSpeed >= _state.maxWalkSpeed)
+                if (moveVector.Equals(Vector2.zero) || currentSpeed >= _state.maxWalkSpeed)
                 {
                     Vector3 frictionDirection = new Vector3(_state.moveDirection.x,0,_state.moveDirection.z);
                     _state.moveDirection -= frictionDirection / frictionDirection.magnitude * _state.playerFriction;
@@ -97,19 +108,29 @@ namespace Game.Core.Systems
 
                 oldY = -0.1f;
             }
-            else if(currentSpeed != 0 && characterController.isGrounded)
+            else if (!characterController.isGrounded)
             {
                 _state.maxWalkSpeed = 10f;
                 _state.playerAcceleration = 0.05f;
                 _state.playerFriction = 0.01f;
 
-                if (!moveVector.Equals(Vector2.zero) && currentSpeed < _state.maxWalkSpeed)
+                if (!moveVector.Equals(Vector2.zero))
                 {
                     Vector3 newMoveDirection = (forward * (moveVector / moveVector.magnitude).y) + (right * (moveVector / moveVector.magnitude).x);
+                    if (currentSpeed > _state.maxWalkSpeed)
+                    {
+                        _state.playerAcceleration = 0.10f;
+                        _state.playerFriction = 0.02f;
+                        if (Vector3.Angle(newMoveDirection, _state.moveDirection) < 90)
+                        {
+                            Debug.Log("AIR STRAFE");
+                            newMoveDirection = Vector3.Project(newMoveDirection, new Vector3(-_state.moveDirection.z, 0 , _state.moveDirection.x));
+                        }
+                    }
                     _state.moveDirection += newMoveDirection / newMoveDirection.magnitude * _state.playerAcceleration;
                 }
 
-                if(moveVector.Equals(Vector2.zero) || currentSpeed >= _state.maxWalkSpeed)
+                if (moveVector.Equals(Vector2.zero) || currentSpeed >= _state.maxWalkSpeed)
                 {
                     Vector3 frictionDirection = new Vector3(_state.moveDirection.x,0,_state.moveDirection.z);
                     _state.moveDirection -= frictionDirection / frictionDirection.magnitude * _state.playerFriction;
@@ -136,6 +157,7 @@ namespace Game.Core.Systems
             characterController.Move(_state.moveDirection * deltaTime);
             _state.isGrounded = characterController.isGrounded;
             Camera.main.transform.position = _player.transform.position + new Vector3(0,1,0);
+            Debug.Log(currentSpeed);
         }
 
         private void Jumped(InputAction.CallbackContext _)
