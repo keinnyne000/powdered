@@ -39,7 +39,14 @@ namespace Game.Core
         public float GunCooldown = 0f;
         public GunBehavior CurrentGun;
         public readonly List<Modifier> Modifiers = new();
-        
+        // Hits in a row without missing. Reset on a miss. Used by Combo Power
+        public int ComboHits;
+
+        //GUN PARTS (upgrades)
+        public int EnemiesKilled;
+        public readonly List<GunPart> GunParts = new();
+        public readonly Observable<int> GunPartCount = new(0);
+
         
         // LEVELS
         public GameObject levelParent;

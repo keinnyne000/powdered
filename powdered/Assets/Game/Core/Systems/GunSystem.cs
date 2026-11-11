@@ -24,11 +24,6 @@ namespace Game.Core.Systems
             
             // TODO: This will be replaced by whatever system gives us guns!
             state.CurrentGun = gun;
-            
-            // TODO: This will be moved to whatever our 'upgrade pickup' system is.
-            var mod = new Modifier("Example-BonusDamage-Modifier")
-                .Register<ShootGameAction>((a, s) => a.BonusDamage += 1);
-            _state.Modifiers.Add(mod);
         }
 
         public void Tick(float deltaTime)
@@ -52,8 +47,11 @@ namespace Game.Core.Systems
             if (_state.CurrentGun.FireSound != null)
                 _audio.PlayOneShot(_state.CurrentGun.FireSound, _state.CurrentGun.FireVolume);
 
-            _state.GunCooldown = _state.CurrentGun.SecondsBetweenShots;
-            new ShootGameAction(camera.transform.position, camera.transform.forward).Trigger(_state);
+            var shot = new ShootGameAction(camera.transform.position, camera.transform.forward);
+            shot.Trigger(_state);
+
+            // Set after the shot so Fire Rate gun parts can speed it up
+            _state.GunCooldown = _state.CurrentGun.SecondsBetweenShots / Mathf.Max(0.01f, shot.FireRateMultiplier);
         }
     }
 }

@@ -26,7 +26,10 @@ namespace Game.Core
 
         [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private List<EnemyVisualLookup> enemyVisualLookups;
-        
+
+        [Header("Upgrades")]
+        [SerializeField] private GunPartRewardConfig gunPartRewardConfig;
+
 
         [Header("Footsteps")]
         [SerializeField] private AudioClip[] footstepClips;
@@ -48,6 +51,9 @@ namespace Game.Core
         public List<EnemyVisualLookup> EnemyVisualLookups => enemyVisualLookups;
 
         public DroneConfig DroneConfig => droneConfig;
+
+        // Upgrades
+        public GunPartRewardConfig GunPartRewardConfig => gunPartRewardConfig;
 
         public AudioClip[] FootstepClips => footstepClips;
         public float FootstepVolume => footstepVolume;
