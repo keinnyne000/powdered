@@ -12,7 +12,14 @@ namespace Game.Core
 
         // PLAYER VARIABLES
         public Transform playerTransform;
-        public readonly Observable<float> PlayerHealth = new(100f);
+        public const float PlayerMaxHealth = 100f;
+        public readonly Observable<float> PlayerHealth = new(PlayerMaxHealth);
+
+        /// <summary>
+        /// seconds since the player last took damage. reset by ProjectileSystem, read by PlayerHealthSystem
+        /// </summary>
+        public float TimeSinceLastHit;
+
 
         //Camera
         public float sensX;

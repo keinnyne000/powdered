@@ -39,6 +39,7 @@ namespace Game.Platform
             app.Register(new DroneMovementSystem(State, config));
             app.Register(new DroneShootSystem(State, config));
             app.Register(new ProjectileSystem(State, config));
+            app.Register(new PlayerHealthSystem(State, config));
             app.Register(new EnemyReapSystem(State));
             app.Register(new EnemyVisualsSystem(State, config));
             // Upgrades
