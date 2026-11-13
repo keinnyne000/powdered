@@ -28,6 +28,9 @@ namespace Game.Platform
             GameConfig = config;
             
             var input = new InputService();
+            app.Register(new PlayerResetSystem(State));
+            app.Register(new QuitSystem());
+            app.Register(new KillCountSystem(State));
             app.Register(new LevelSpawnSystem(State, config));
             app.Register(new PlayerInputSystem(input, commands));
             app.Register(new CommandSystem(State, commands));

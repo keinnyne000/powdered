@@ -14,7 +14,8 @@ namespace Game.Core
         public Transform playerTransform;
         public const float PlayerMaxHealth = 100f;
         public readonly Observable<float> PlayerHealth = new(PlayerMaxHealth);
-
+        public readonly Observable<int> KillCount = new(0);
+        
         /// <summary>
         /// seconds since the player last took damage. reset by ProjectileSystem, read by PlayerHealthSystem
         /// </summary>
