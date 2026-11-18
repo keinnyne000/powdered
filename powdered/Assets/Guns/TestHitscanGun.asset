@@ -15,7 +15,7 @@ MonoBehaviour:
   fireRate: 4
   automatic: 0
   damage: 10
-  knockbackForce: 4
+  knockbackForce: 3
   fireSound: {fileID: 8300000, guid: d7088e97b82755743b74474c68c867d9, type: 3}
   fireVolume: 1
   range: 100

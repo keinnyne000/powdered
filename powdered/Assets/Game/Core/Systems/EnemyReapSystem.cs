@@ -26,6 +26,7 @@ namespace Game.Core.Systems
                 // Drop the lookup entry here so EnemyVisuals doesn't keep dead enemies forever.
                 _state.EnemyVisuals.Remove(enemy);
                 _state.EnemiesKilled++;
+                _state.KillCount.Value++; //this is redundant, I know; will fix later (Ryan)
                 Debug.Log($"Destroying: {enemy}");
                 Object.Destroy(enemy.gameObject);
             }

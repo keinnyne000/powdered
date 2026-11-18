@@ -38,7 +38,6 @@ namespace Game.Core.Guns
         /// </summary>
         public void Fire(ShootGameAction context, GameState state)
         {
-            knockbackForce = 10f;
             state.knockbackVelocity = -context.Direction / context.Direction.magnitude * knockbackForce;
             state.moveDirection += state.knockbackVelocity;
             if(state.moveDirection.y / Math.Abs(state.moveDirection.y) + state.knockbackVelocity.y / Math.Abs(state.knockbackVelocity.y) == 0)

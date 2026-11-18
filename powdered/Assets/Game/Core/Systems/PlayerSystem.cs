@@ -21,8 +21,8 @@ namespace Game.Core.Systems
             characterController.center = new Vector3(0,1,0);
 
             //Camera
-            _state.sensX = 50;
-            _state.sensY = -50;
+            _state.sensX = 3;
+            _state.sensY = -3;
             _state.xRotation = 0;
             _state.yRotation = 0;
             Cursor.lockState = CursorLockMode.Locked;
@@ -157,7 +157,6 @@ namespace Game.Core.Systems
             characterController.Move(_state.moveDirection * deltaTime);
             _state.isGrounded = characterController.isGrounded;
             Camera.main.transform.position = _player.transform.position + new Vector3(0,1,0);
-            Debug.Log(currentSpeed);
         }
 
         private void Jumped(InputAction.CallbackContext _)
