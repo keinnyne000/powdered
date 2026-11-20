@@ -81,33 +81,6 @@ namespace Game.Core.Systems
 
                 walkingHelper();
 
-                // if (!moveVector.Equals(Vector2.zero))
-                // {
-                //     Vector3 newMoveDirection = (forward * (moveVector / moveVector.magnitude).y) + (right * (moveVector / moveVector.magnitude).x);
-                //     if (currentSpeed > _state.maxWalkSpeed)
-                //     {
-                //         _state.playerAcceleration = 0.04f;
-                //         _state.playerFriction = 0.04f;
-                //         if (Vector3.Angle(newMoveDirection, _state.moveDirection) < 90)
-                //         {
-                //             Debug.Log("GROUND STRAFE");
-                //             newMoveDirection = Vector3.Project(newMoveDirection, new Vector3(-_state.moveDirection.z, 0 , _state.moveDirection.x));
-                //         }
-                //     }
-                //     _state.moveDirection += newMoveDirection / newMoveDirection.magnitude * _state.playerAcceleration;
-                // }
-                
-                // if (moveVector.Equals(Vector2.zero) || currentSpeed >= _state.maxWalkSpeed)
-                // {
-                //     Vector3 frictionDirection = new Vector3(_state.moveDirection.x,0,_state.moveDirection.z);
-                //     _state.moveDirection -= frictionDirection / frictionDirection.magnitude * _state.playerFriction;
-
-                //     if(currentSpeed <= 0.02)
-                //     {
-                //         _state.moveDirection = Vector3.zero;
-                //     }
-                // }
-
                 oldY = -0.1f;
             }
             else if (!characterController.isGrounded)
@@ -117,42 +90,8 @@ namespace Game.Core.Systems
                 _state.playerFriction = 0.01f;
 
                 walkingHelper();
-
-                // if (!moveVector.Equals(Vector2.zero))
-                // {
-                //     Vector3 newMoveDirection = (forward * (moveVector / moveVector.magnitude).y) + (right * (moveVector / moveVector.magnitude).x);
-                //     if (currentSpeed > _state.maxWalkSpeed)
-                //     {
-                //         _state.playerAcceleration = 0.10f;
-                //         _state.playerFriction = 0.02f;
-                //         if (Vector3.Angle(newMoveDirection, _state.moveDirection) < 90)
-                //         {
-                //             Debug.Log("AIR STRAFE");
-                //             newMoveDirection = Vector3.Project(newMoveDirection, new Vector3(-_state.moveDirection.z, 0 , _state.moveDirection.x));
-                //         }
-                //     }
-                //     _state.moveDirection += newMoveDirection / newMoveDirection.magnitude * _state.playerAcceleration;
-                // }
-
-                // if (moveVector.Equals(Vector2.zero) || currentSpeed >= _state.maxWalkSpeed)
-                // {
-                //     Vector3 frictionDirection = new Vector3(_state.moveDirection.x,0,_state.moveDirection.z);
-                //     _state.moveDirection -= frictionDirection / frictionDirection.magnitude * _state.playerFriction;
-
-                //     if(currentSpeed <= 0.02)
-                //     {
-                //         _state.moveDirection = Vector3.zero;
-                //     }
-                // }
             }
 
-            Vector3 playerPosition = characterController.transform.position;
-            Vector3 headPosition = new Vector3(playerPosition.x, playerPosition.y + characterController.height, playerPosition.z);
-
-            if (Physics.CapsuleCast(playerPosition, headPosition, characterController.radius, _state.moveDirection, out RaycastHit hitInfo))
-            {
-                Debug.Log("HIT NORMAL: " + (_state.moveDirection.normalized - hitInfo.normal));
-            }
 
             if (_state.jumped && characterController.isGrounded)
                 _state.moveDirection.y = _state.playerJumpForce;
@@ -164,6 +103,14 @@ namespace Game.Core.Systems
             if (!characterController.isGrounded)
             {
                 _state.moveDirection.y -= _state.playerGravity * deltaTime;
+            }
+
+
+            //Ceiling collision
+            if ((characterController.collisionFlags & CollisionFlags.Above) != 0)
+            {
+                Debug.Log("Hit Ceiling!");
+                _state.moveDirection.y = 0;
             }
 
             characterController.Move(_state.moveDirection * deltaTime);
@@ -179,30 +126,40 @@ namespace Game.Core.Systems
             float currentSpeed = new Vector2(_state.moveDirection.z,_state.moveDirection.x).magnitude;
 
             if (!moveVector.Equals(Vector2.zero))
+            {
+                Vector3 newMoveDirection = (forward * (moveVector / moveVector.magnitude).y) + (right * (moveVector / moveVector.magnitude).x);
+                if (currentSpeed > _state.maxWalkSpeed)
                 {
-                    Vector3 newMoveDirection = (forward * (moveVector / moveVector.magnitude).y) + (right * (moveVector / moveVector.magnitude).x);
-                    if (currentSpeed > _state.maxWalkSpeed)
+                    _state.playerAcceleration = 0.04f;
+                    _state.playerFriction = 0.04f;
+                    if (Vector3.Angle(newMoveDirection, _state.moveDirection) < 90)
                     {
-                        _state.playerAcceleration = 0.04f;
-                        _state.playerFriction = 0.04f;
-                        if (Vector3.Angle(newMoveDirection, _state.moveDirection) < 90)
-                        {
-                            newMoveDirection = Vector3.Project(newMoveDirection, new Vector3(-_state.moveDirection.z, 0 , _state.moveDirection.x));
-                        }
+                        newMoveDirection = Vector3.Project(newMoveDirection, new Vector3(-_state.moveDirection.z, 0 , _state.moveDirection.x));
                     }
-                    _state.moveDirection += newMoveDirection / newMoveDirection.magnitude * _state.playerAcceleration;
                 }
+                _state.moveDirection += newMoveDirection / newMoveDirection.magnitude * _state.playerAcceleration;
                 
-                if (moveVector.Equals(Vector2.zero) || currentSpeed >= _state.maxWalkSpeed)
-                {
-                    Vector3 frictionDirection = new Vector3(_state.moveDirection.x,0,_state.moveDirection.z);
-                    _state.moveDirection -= frictionDirection / frictionDirection.magnitude * _state.playerFriction;
+            }
+            
+            if (moveVector.Equals(Vector2.zero) || currentSpeed >= _state.maxWalkSpeed)
+            {
+                Vector3 frictionDirection = new Vector3(_state.moveDirection.x,0,_state.moveDirection.z);
+                _state.moveDirection -= frictionDirection / frictionDirection.magnitude * _state.playerFriction;
 
-                    if(currentSpeed <= 0.02)
-                    {
-                        _state.moveDirection = Vector3.zero;
-                    }
+                if(currentSpeed <= 0.02)
+                {
+                    _state.moveDirection = Vector3.zero;
                 }
+
+                Vector3 playerPosition = characterController.transform.position;
+                Vector3 headPosition = new Vector3(playerPosition.x, playerPosition.y + characterController.height, playerPosition.z);
+
+                if (Physics.CapsuleCast(playerPosition + Vector3.up * 0.5f, headPosition - Vector3.up * 0.5f, characterController.radius, _state.moveDirection, out RaycastHit hitInfo, 0.1f))
+                {
+                    Debug.Log(hitInfo.normal + " " + _state.moveDirection.y);
+                    _state.moveDirection = Vector3.Project(new Vector3(_state.moveDirection.x, 0, _state.moveDirection.z), new Vector3(-hitInfo.normal.z, 0, hitInfo.normal.x));
+                }
+            }
         }
 
         private void Jumped(InputAction.CallbackContext _)
